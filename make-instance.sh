@@ -55,7 +55,4 @@ fi
 ./use-instance.sh
 
 cd "$curdir"
-pwd
-ls -al
 echo ${W2L_INSTANCE_NAME} >> ./instances.log
-ls -al

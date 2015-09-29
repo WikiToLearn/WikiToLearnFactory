@@ -8,7 +8,8 @@ if [ ! -f ./factory.config ] ; then
  fi
  if [ -z "$W2L_RUNNING_DIR" ] ; then
   echo "Missing \$W2L_RUNNING_DIR variabile"
-  exit 1
+  echo "Using default running/"
+  export W2L_RUNNING_DIR=running/
  fi
  {
   echo "export W2L_PRODUCTION=1"
