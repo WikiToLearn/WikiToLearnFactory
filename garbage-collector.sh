@@ -18,4 +18,5 @@ CURRENT=$(cat instances.log | tail -1)
 ls $W2L_RUNNING_DIR | grep -v $CURRENT | while read TO_DELETE_W2L_INSTANCE_NAME ; do
  export W2L_INSTANCE_NAME=$TO_DELETE_W2L_INSTANCE_NAME
  ./destroy-instance.sh
+ sed -i '/'$W2L_INSTANCE_NAME'/d' instances.log
 done

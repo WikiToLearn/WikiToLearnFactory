@@ -26,25 +26,27 @@ if [ -f instances.log ] ; then
 
  cd "$FACTORY_PWD"
 
- cd WikiToLearn
- export W2L_COMMIT=""
- if [[ "$W2L_STAGING" == "1" ]] ; then
-  export W2L_COMMIT=$(git log -n1 | grep commit | awk '{ print $2 }')
- else
-  export W2L_COMMIT=$(git show $(git tag | sort -Vr | head -1) | head -1 | grep commit | awk '{ print $2 }')
- fi
- cd ..
-
  BACKUP_DIR=$(ls $W2L_BACKUP_PATH | sort -Vr | head -1)
  echo "New version hash: "$W2L_COMMIT
  echo "Backup dir: "$BACKUP_DIR
 
  export W2L_BACKUP_TO_RESTORE=$W2L_BACKUP_PATH"/"$BACKUP_DIR
- export W2L_INSTANCE_NAME=${W2L_COMMIT:0:8}
 else
  if [[ "$1" != "" ]] ; then
   echo "Restoring $1 backup..."
   export W2L_BACKUP_TO_RESTORE="$1"
  fi
 fi
+
+cd WikiToLearn
+export W2L_COMMIT=""
+if [[ "$W2L_STAGING" == "1" ]] ; then
+ export W2L_COMMIT=$(git log -n1 | grep commit | awk '{ print $2 }')
+else
+ export W2L_COMMIT=$(git show $(git tag | sort -Vr | head -1) | head -1 | grep commit | awk '{ print $2 }')
+fi
+cd ..
+
+export W2L_INSTANCE_NAME=${W2L_COMMIT:0:8}
+
 ./make-instance.sh
