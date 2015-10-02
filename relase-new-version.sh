@@ -40,13 +40,19 @@ fi
 
 cd WikiToLearn
 export W2L_COMMIT=""
-if [[ "$W2L_STAGING" == "1" ]] ; then
- export W2L_COMMIT=$(git log -n1 | grep commit | awk '{ print $2 }')
-else
+if [[ "$W2L_USE_LAST" == "tag" ]] ; then
  export W2L_COMMIT=$(git show $(git tag | sort -Vr | head -1) | head -1 | grep commit | awk '{ print $2 }')
+elif [[ "$W2L_USE_LAST" == "commit" ]] ; then
+ export W2L_COMMIT=$(git log -n1 | grep commit | awk '{ print $2 }')
 fi
 cd ..
 
 export W2L_INSTANCE_NAME=${W2L_COMMIT:0:8}
 
 ./make-instance.sh
+
+cd "$FACTORY_PWD"
+if [ -f secrets.php ] ; then
+ echo "Copy secrets.php"
+ cp secrets.php "${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}/Dockers/configs/secrets/"
+fi

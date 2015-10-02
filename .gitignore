@@ -2,3 +2,5 @@ WikiToLearn/
 running/
 factory.config
 instances.log
+secrets.php
+backups/
