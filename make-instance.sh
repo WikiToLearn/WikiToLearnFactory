@@ -13,6 +13,11 @@ if [ ! -d WikiToLearn ] ; then
 fi
 
 . ./factory.config
+if [ "$W2L_FACTORY_RELASE" != "0.1" ] ; then
+ echo "W2L Factory Relase Error"
+ exit
+fi
+
 
 which rsync &> /dev/null
 if [[ $? -ne 0 ]] ; then
@@ -49,6 +54,7 @@ if [[ "$W2L_BACKUP_TO_RESTORE" == "" ]] ; then
  export W2L_INIT_DB=1
  ./init-docker.sh
 else
+ export W2L_INIT_DB=0
  ./restore.sh "$W2L_BACKUP_TO_RESTORE"
  ./init-docker.sh
 fi

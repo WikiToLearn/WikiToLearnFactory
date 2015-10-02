@@ -29,6 +29,4 @@ if [ ! -d "${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}" ] ; then
 fi
 
 cd "${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}/Dockers"
-./run.sh
-./fix-hosts.sh
-./use-instance.sh
+./backup.sh

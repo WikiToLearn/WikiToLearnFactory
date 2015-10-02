@@ -29,11 +29,16 @@ if [ ! -f ./factory.config ] ; then
   echo "export W2L_USE_LAST='commit' # set 'tag' for use only last WikiToLearn git tag"
   echo "export W2L_BACKUP_PATH=$W2L_BACKUP_PATH"
   echo "export W2L_RUNNING_DIR=$W2L_RUNNING_DIR"
+  echo "export W2L_FACTORY_RELASE=0.1"
  } > ./factory.config
  chmod +x ./factory.config
 fi
 
 . ./factory.config
+if [ "$W2L_FACTORY_RELASE" != "0.1" ] ; then
+ echo "W2L Factory Relase Error"
+ exit
+fi
 
 if [ ! -d "$W2L_BACKUP_PATH" ] ; then
  echo "Missing backup PATH"

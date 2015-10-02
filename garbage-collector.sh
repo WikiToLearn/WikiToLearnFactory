@@ -12,6 +12,11 @@ if [ ! -d WikiToLearn ] ; then
 fi
 
 . ./factory.config
+if [ "$W2L_FACTORY_RELASE" != "0.1" ] ; then
+ echo "W2L Factory Relase Error"
+ exit
+fi
+
 
 CURRENT=$(cat instances.log | tail -1)
 

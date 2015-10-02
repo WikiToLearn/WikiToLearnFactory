@@ -13,6 +13,10 @@ if [ ! -d WikiToLearn ] ; then
 fi
 
 . ./factory.config
+if [ "$W2L_FACTORY_RELASE" != "0.1" ] ; then
+ echo "W2L Factory Relase Error"
+ exit
+fi
 
 if [ -f instances.log ] ; then
  OLD_W2L_INSTANCE_NAME=$(cat instances.log | tail -1)
@@ -47,12 +51,12 @@ elif [[ "$W2L_USE_LAST" == "commit" ]] ; then
 fi
 cd ..
 
-export W2L_INSTANCE_NAME=${W2L_COMMIT:0:8}
+export W2L_INSTANCE_NAME=w2l-${W2L_COMMIT:0:8}
 
 ./make-instance.sh
 
 cd "$FACTORY_PWD"
 if [ -f secrets.php ] ; then
- echo "Copy secrets.php"
- cp secrets.php "${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}/Dockers/configs/secrets/"
+ echo "Copy secrets.php to ${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}/Dockers/configs/secrets/secrets.php"
+ cp secrets.php "${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}/Dockers/configs/secrets/secrets.php"
 fi

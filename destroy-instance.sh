@@ -7,6 +7,10 @@ if [ ! -f ./factory.config ] ; then
 fi
 
 . ./factory.config
+if [ "$W2L_FACTORY_RELASE" != "0.1" ] ; then
+ echo "W2L Factory Relase Error"
+ exit
+fi
 
 [[ -z "$W2L_INSTANCE_NAME" ]] && W2L_INSTANCE_NAME="w2l-dev"
 
