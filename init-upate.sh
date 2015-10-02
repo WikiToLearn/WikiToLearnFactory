@@ -50,6 +50,7 @@ if [ ! -d WikiToLearn ] ; then
 fi
 
 cd WikiToLearn
+git pull
 git pull --recurse-submodules
 git submodule update --recursive
 cd ..
