@@ -49,6 +49,7 @@ fi
 cd "Dockers/"
 export W2L_BACKUP_ENABLED=1
 ./run.sh
+./run.sh
 ./fix-hosts.sh
 if [[ "$W2L_BACKUP_TO_RESTORE" == "" ]] ; then
  export W2L_INIT_DB=1
