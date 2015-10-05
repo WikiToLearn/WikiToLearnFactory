@@ -51,7 +51,7 @@ elif [[ "$W2L_USE_LAST" == "commit" ]] ; then
 fi
 cd ..
 
-export W2L_INSTANCE_NAME=w2l-${W2L_COMMIT:0:8}
+export W2L_INSTANCE_NAME="w2l-"$(date +%s)"-"${W2L_COMMIT:0:8}
 
 ./make-instance.sh
 
