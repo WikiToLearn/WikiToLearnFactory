@@ -13,7 +13,7 @@ if [ ! -d WikiToLearn ] ; then
 fi
 
 . ./factory.config
-if [ "$W2L_FACTORY_RELASE" != "0.1" ] ; then
+if [ "$W2L_FACTORY_RELASE" != "0.2" ] ; then
  echo "W2L Factory Relase Error"
  exit
 fi
@@ -31,7 +31,6 @@ if [ -f instances.log ] ; then
  cd "$FACTORY_PWD"
 
  BACKUP_DIR=$(ls $W2L_BACKUP_PATH | sort -Vr | head -1)
- echo "New version hash: "$W2L_COMMIT
  echo "Backup dir: "$BACKUP_DIR
 
  export W2L_BACKUP_TO_RESTORE=$W2L_BACKUP_PATH"/"$BACKUP_DIR
@@ -43,17 +42,20 @@ else
 fi
 
 cd WikiToLearn
-export W2L_COMMIT=""
-if [[ "$W2L_USE_LAST" == "tag" ]] ; then
- export W2L_COMMIT=$(git show $(git tag | sort -Vr | head -1) | head -1 | grep commit | awk '{ print $2 }')
-elif [[ "$W2L_USE_LAST" == "commit" ]] ; then
- export W2L_COMMIT=$(git log -n1 | grep commit | awk '{ print $2 }')
+export W2L_COMMIT="$W2L_COMMIT"
+if [[ "$W2L_COMMIT" == "" ]] ; then
+ if [[ "$W2L_USE_LAST" == "tag" ]] ; then
+  export W2L_COMMIT=$(git show $(git tag | sort -Vr | head -1) | head -1 | grep commit | awk '{ print $2 }')
+ elif [[ "$W2L_USE_LAST" == "commit" ]] ; then
+  export W2L_COMMIT=$(git log -n1 | grep commit | awk '{ print $2 }')
+ fi
 fi
 cd ..
+echo "New version hash: "$W2L_COMMIT
 
-export W2L_INSTANCE_NAME="w2l-"$(date +%s)"-"${W2L_COMMIT:0:8}
+export W2L_INSTANCE_NAME="w2l-"${W2L_COMMIT:0:8}
 
-./make-instance.sh
+./bin/make-instance.sh
 
 cd "$FACTORY_PWD"
 if [ -f secrets.php ] ; then

@@ -2,18 +2,18 @@
 cd "$(dirname "$(readlink "$0" || printf %s "$0")")"
 curdir=$(pwd)
 
-if [ ! -f ./factory.config ] ; then
+if [ ! -f ../factory.config ] ; then
  echo "Missing ./factory.config. Run ./init-update.sh first"
  exit 1
 fi
 
-if [ ! -d WikiToLearn ] ; then
+if [ ! -d ../WikiToLearn ] ; then
  echo "Missing WikiToLearn repo"
  exit 1
 fi
 
-. ./factory.config
-if [ "$W2L_FACTORY_RELASE" != "0.1" ] ; then
+. ../factory.config
+if [ "$W2L_FACTORY_RELASE" != "0.2" ] ; then
  echo "W2L Factory Relase Error"
  exit
 fi
@@ -39,7 +39,8 @@ fi
 
 echo "Create repository copy"
 
-rsync -a --stats WikiToLearn/ "${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}/"
+rsync -a --stats ../WikiToLearn/ "${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}/"
+chown 1000:1000 "${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}/" -R
 cd "${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}/"
 if [[ ! -z "$W2L_COMMIT" ]] ; then
  git checkout "$W2L_COMMIT"
@@ -61,4 +62,4 @@ fi
 ./use-instance.sh
 
 cd "$curdir"
-echo ${W2L_INSTANCE_NAME} >> ./instances.log
+echo ${W2L_INSTANCE_NAME} >> ../instances.log
