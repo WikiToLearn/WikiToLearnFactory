@@ -61,7 +61,7 @@ else
  fi
 fi
 
-export W2L_NEW_INSTANCE_NAME=$W2L_INSTANCE_NAME
+export W2L_INSTANCE_NAME=$W2L_NEW_INSTANCE_NAME
 
 ./bin/make-instance.sh
 
