@@ -18,6 +18,26 @@ if [ "$W2L_FACTORY_RELASE" != "0.2" ] ; then
  exit
 fi
 
+cd WikiToLearn
+export W2L_COMMIT="$W2L_COMMIT"
+if [[ "$W2L_COMMIT" == "" ]] ; then
+ if [[ "$W2L_USE_LAST" == "tag" ]] ; then
+  export W2L_COMMIT=$(git show $(git tag | sort -Vr | head -1) | head -1 | grep commit | awk '{ print $2 }')
+ elif [[ "$W2L_USE_LAST" == "commit" ]] ; then
+  export W2L_COMMIT=$(git log -n1 | grep commit | awk '{ print $2 }')
+ fi
+fi
+cd ..
+echo "New version hash: "$W2L_COMMIT
+
+export W2L_NEW_INSTANCE_NAME="w2l-"${W2L_COMMIT:0:8}
+
+grep $W2L_NEW_INSTANCE_NAME instances.log &> /dev/null
+if [[ $? -eq 0 ]] ; then
+ echo "W2L Is already at last version"
+ exit 1
+fi
+
 if [ -f instances.log ] ; then
  OLD_W2L_INSTANCE_NAME=$(cat instances.log | tail -1)
 
@@ -41,19 +61,7 @@ else
  fi
 fi
 
-cd WikiToLearn
-export W2L_COMMIT="$W2L_COMMIT"
-if [[ "$W2L_COMMIT" == "" ]] ; then
- if [[ "$W2L_USE_LAST" == "tag" ]] ; then
-  export W2L_COMMIT=$(git show $(git tag | sort -Vr | head -1) | head -1 | grep commit | awk '{ print $2 }')
- elif [[ "$W2L_USE_LAST" == "commit" ]] ; then
-  export W2L_COMMIT=$(git log -n1 | grep commit | awk '{ print $2 }')
- fi
-fi
-cd ..
-echo "New version hash: "$W2L_COMMIT
-
-export W2L_INSTANCE_NAME="w2l-"${W2L_COMMIT:0:8}
+export W2L_NEW_INSTANCE_NAME=$W2L_INSTANCE_NAME
 
 ./bin/make-instance.sh
 
