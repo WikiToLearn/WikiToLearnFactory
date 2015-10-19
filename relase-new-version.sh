@@ -69,4 +69,6 @@ cd "$FACTORY_PWD"
 if [ -f secrets.php ] ; then
  echo "Copy secrets.php to ${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}/Dockers/configs/secrets/secrets.php"
  cp secrets.php "${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}/Dockers/configs/secrets/secrets.php"
+ echo "Copy secrets.php to ${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}/secrets/secrets.php"
+ cp secrets.php "${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}/secrets/secrets.php"
 fi
