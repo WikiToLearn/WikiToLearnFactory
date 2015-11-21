@@ -32,6 +32,8 @@ if [[ "$W2L_COMMIT" == "" ]] ; then
   export W2L_COMMIT=$(git show $(git tag | sort -Vr | head -1) | head -1 | grep commit | awk '{ print $2 }')
  elif [[ "$W2L_USE_LAST" == "commit" ]] ; then
   export W2L_COMMIT=$(git log -n1 | grep commit | awk '{ print $2 }')
+ elif [[ "$W2L_USE_LAST" == "develop" ]] ; then
+  export W2L_COMMIT=$(git log develop -n1 | grep commit | awk '{ print $2 }')
  fi
 fi
 cd ..
