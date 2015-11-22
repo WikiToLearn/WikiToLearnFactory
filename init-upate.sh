@@ -60,8 +60,9 @@ fi
 cd WikiToLearn
 if [[ "$W2L_BRANCH" != "" ]] ; then
  git checkout "$W2L_BRANCH"
+else
+ git checkout master
 fi
 git pull
-git pull --recurse-submodules
 git submodule update --recursive
 cd ..
