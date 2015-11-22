@@ -32,6 +32,7 @@ if [ ! -f ./factory.config ] ; then
   echo "export W2L_FACTORY_RELASE=0.2"
   echo "# export W2L_RELAY_HOST=relayhost.not.used"
   echo "# export W2L_DOCKER_MOUNT_DIRS=0"
+  echo "# export W2L_BRANCH=master"
  } > ./factory.config
  chmod +x ./factory.config
 fi
@@ -57,6 +58,9 @@ if [ ! -d WikiToLearn ] ; then
 fi
 
 cd WikiToLearn
+if [[ "$W2L_BRANCH" != "" ]] ; then
+ git checkout "$W2L_BRANCH"
+fi
 git pull
 git pull --recurse-submodules
 git submodule update --recursive

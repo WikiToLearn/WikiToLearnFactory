@@ -51,6 +51,10 @@ export W2L_INSTANCE_NAME=$W2L_NEW_INSTANCE_NAME
 
 ./bin/make-instance.sh
 
+if [[ "$W2L_STAGE_URL" != "" ]] ; then
+ curl --data "commit=$W2L_COMMIT&host=$(hostname -f)" "$W2L_STAGE_URL"
+fi
+
 cd "$FACTORY_PWD"
 if [ -f secrets.php ] ; then
  echo "Copy secrets.php to ${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}/Dockers/configs/secrets/secrets.php"
