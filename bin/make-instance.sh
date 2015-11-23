@@ -44,7 +44,6 @@ chown 1000:1000 "${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}/" -R
 cd "${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}/"
 if [[ ! -z "$W2L_COMMIT" ]] ; then
  git checkout "$W2L_COMMIT"
- git pull --recurse-submodules
  git submodule update --recursive
 fi
 cd "Dockers/"
