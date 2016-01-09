@@ -44,9 +44,7 @@ chown 1000:1000 "${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}/" -R
 cd "${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}/"
 if [[ ! -z "$W2L_COMMIT" ]] ; then
  git checkout "$W2L_COMMIT"
- git submodule sync
- git submodule init
- git submodule update --recursive
+ git submodule update --init --recursive --checkout
 fi
 cd "Dockers/"
 export W2L_BACKUP_ENABLED=1
