@@ -64,5 +64,6 @@ else
  git checkout master
 fi
 git pull
+git submodule sync
 git submodule update --init --recursive --checkout
 cd ..
