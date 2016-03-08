@@ -7,8 +7,8 @@ if [ ! -f ../factory.config ] ; then
 fi
 
 . ../factory.config
-if [ "$W2L_FACTORY_RELASE" != "0.2" ] ; then
- echo "W2L Factory Relase Error"
+if [ "$WTL_FACTORY_RELASE" != "0.2" ] ; then
+ echo "WTL Factory Relase Error"
  exit
 fi
-ls $W2L_BACKUP_PATH | sort -Vr
+ls $WTL_BACKUP_PATH | sort -Vr

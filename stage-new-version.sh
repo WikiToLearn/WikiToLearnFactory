@@ -2,10 +2,10 @@
 cd "$(dirname "$(readlink "$0" || printf %s "$0")")"
 FACTORY_PWD=$(pwd)
 
-export W2L_BACKUP_TO_RESTORE="$1"
+export WTL_BACKUP_TO_RESTORE="$1"
 
-if [[ ! -d "$W2L_BACKUP_TO_RESTORE" ]] ; then
- echo "Missing $W2L_BACKUP_TO_RESTORE directory"
+if [[ ! -d "$WTL_BACKUP_TO_RESTORE" ]] ; then
+ echo "Missing $WTL_BACKUP_TO_RESTORE directory"
  exit 1
 fi
 
@@ -20,43 +20,43 @@ if [ ! -d WikiToLearn ] ; then
 fi
 
 . ./factory.config
-if [ "$W2L_FACTORY_RELASE" != "0.2" ] ; then
- echo "W2L Factory Relase Error"
+if [ "$WTL_FACTORY_RELASE" != "0.2" ] ; then
+ echo "WTL Factory Relase Error"
  exit
 fi
 
 cd WikiToLearn
-export W2L_COMMIT="$W2L_COMMIT"
-if [[ "$W2L_COMMIT" == "" ]] ; then
- if [[ "$W2L_USE_LAST" == "tag" ]] ; then
-  export W2L_COMMIT=$(git show $(git tag | sort -Vr | head -1) | head -1 | grep commit | awk '{ print $2 }')
- elif [[ "$W2L_USE_LAST" == "commit" ]] ; then
-  export W2L_COMMIT=$(git log -n1 | grep commit | awk '{ print $2 }')
+export WTL_COMMIT="$WTL_COMMIT"
+if [[ "$WTL_COMMIT" == "" ]] ; then
+ if [[ "$WTL_USE_LAST" == "tag" ]] ; then
+  export WTL_COMMIT=$(git show $(git tag | sort -Vr | head -1) | head -1 | grep commit | awk '{ print $2 }')
+ elif [[ "$WTL_USE_LAST" == "commit" ]] ; then
+  export WTL_COMMIT=$(git log -n1 | grep commit | awk '{ print $2 }')
  fi
 fi
 cd ..
-echo "New version hash: "$W2L_COMMIT
+echo "New version hash: "$WTL_COMMIT
 
-export W2L_NEW_INSTANCE_NAME="w2l-"${W2L_COMMIT:0:8}
+export WTL_NEW_INSTANCE_NAME="wtl-"${WTL_COMMIT:0:8}
 
-grep $W2L_NEW_INSTANCE_NAME instances.log &> /dev/null
+grep $WTL_NEW_INSTANCE_NAME instances.log &> /dev/null
 if [[ $? -eq 0 ]] ; then
- echo "W2L Is already at last version"
+ echo "WTL Is already at last version"
  exit 1
 fi
 
-export W2L_INSTANCE_NAME=$W2L_NEW_INSTANCE_NAME
+export WTL_INSTANCE_NAME=$WTL_NEW_INSTANCE_NAME
 
 ./bin/make-instance.sh
 
-if [[ "$W2L_STAGE_URL" != "" ]] ; then
- curl --data "commit=$W2L_COMMIT&host=$(hostname -f)&baseurl=$W2L_STAGE_PUBLIC_NAME" "$W2L_STAGE_URL"
+if [[ "$WTL_STAGE_URL" != "" ]] ; then
+ curl --data "commit=$WTL_COMMIT&host=$(hostname -f)&baseurl=$WTL_STAGE_PUBLIC_NAME" "$WTL_STAGE_URL"
 fi
 
 cd "$FACTORY_PWD"
 if [ -f secrets.php ] ; then
- echo "Copy secrets.php to ${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}/Dockers/configs/secrets/secrets.php"
- cp secrets.php "${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}/Dockers/configs/secrets/secrets.php"
- echo "Copy secrets.php to ${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}/secrets/secrets.php"
- cp secrets.php "${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}/secrets/secrets.php"
+ echo "Copy secrets.php to ${WTL_RUNNING_DIR}/${WTL_INSTANCE_NAME}/Dockers/configs/secrets/secrets.php"
+ cp secrets.php "${WTL_RUNNING_DIR}/${WTL_INSTANCE_NAME}/Dockers/configs/secrets/secrets.php"
+ echo "Copy secrets.php to ${WTL_RUNNING_DIR}/${WTL_INSTANCE_NAME}/secrets/secrets.php"
+ cp secrets.php "${WTL_RUNNING_DIR}/${WTL_INSTANCE_NAME}/secrets/secrets.php"
 fi

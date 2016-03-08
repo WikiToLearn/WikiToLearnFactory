@@ -11,7 +11,7 @@ First time checkout
 
 The first script to run is
 
-    export W2L_BACKUP_PATH=<path of backups>
+    export WTL_BACKUP_PATH=<path of backups>
     ./init-upate.sh
   
 this pull the WikiToLearn repository and make a basic configuration file.

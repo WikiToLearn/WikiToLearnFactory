@@ -14,41 +14,41 @@ if [[ $? -ne 0 ]] ; then
 fi
 
 if [ ! -f ./factory.config ] ; then
- if [ -z "$W2L_BACKUP_PATH" ] ; then
-  echo "Missing \$W2L_BACKUP_PATH variabile"
+ if [ -z "$WTL_BACKUP_PATH" ] ; then
+  echo "Missing \$WTL_BACKUP_PATH variabile"
   echo "Using default: backups/"
-  export W2L_BACKUP_PATH=$(pwd)"/backups/"
+  export WTL_BACKUP_PATH=$(pwd)"/backups/"
  fi
- if [ -z "$W2L_RUNNING_DIR" ] ; then
-  echo "Missing \$W2L_RUNNING_DIR variabile"
+ if [ -z "$WTL_RUNNING_DIR" ] ; then
+  echo "Missing \$WTL_RUNNING_DIR variabile"
   echo "Using default: running/"
-  export W2L_RUNNING_DIR=$(pwd)"/running/"
+  export WTL_RUNNING_DIR=$(pwd)"/running/"
  fi
  {
-  echo "export W2L_PRODUCTION=1"
-  echo "export W2L_USE_LAST='commit' # set 'tag' for use only last WikiToLearn git tag"
-  echo "export W2L_BACKUP_PATH=$W2L_BACKUP_PATH"
-  echo "export W2L_RUNNING_DIR=$W2L_RUNNING_DIR"
-  echo "export W2L_FACTORY_RELASE=0.2"
-  echo "# export W2L_RELAY_HOST=relayhost.not.used"
-  echo "# export W2L_DOCKER_MOUNT_DIRS=0"
-  echo "# export W2L_BRANCH=master"
+  echo "export WTL_PRODUCTION=1"
+  echo "export WTL_USE_LAST='commit' # set 'tag' for use only last WikiToLearn git tag"
+  echo "export WTL_BACKUP_PATH=$WTL_BACKUP_PATH"
+  echo "export WTL_RUNNING_DIR=$WTL_RUNNING_DIR"
+  echo "export WTL_FACTORY_RELASE=0.2"
+  echo "# export WTL_RELAY_HOST=relayhost.not.used"
+  echo "# export WTL_DOCKER_MOUNT_DIRS=0"
+  echo "# export WTL_BRANCH=master"
  } > ./factory.config
  chmod +x ./factory.config
 fi
 
 . ./factory.config
-if [ "$W2L_FACTORY_RELASE" != "0.2" ] ; then
- echo "W2L Factory Relase Error"
+if [ "$WTL_FACTORY_RELASE" != "0.2" ] ; then
+ echo "WTL Factory Relase Error"
  exit
 fi
 
-if [ ! -d "$W2L_BACKUP_PATH" ] ; then
+if [ ! -d "$WTL_BACKUP_PATH" ] ; then
  echo "Missing backup PATH"
  exit 1
 fi
 
-if [ ! -d "$W2L_RUNNING_DIR" ] ; then
+if [ ! -d "$WTL_RUNNING_DIR" ] ; then
  echo "Missing running PATH"
  exit 1
 fi
@@ -58,8 +58,8 @@ if [ ! -d WikiToLearn ] ; then
 fi
 
 cd WikiToLearn
-if [[ "$W2L_BRANCH" != "" ]] ; then
- git checkout "$W2L_BRANCH"
+if [[ "$WTL_BRANCH" != "" ]] ; then
+ git checkout "$WTL_BRANCH"
 else
  git checkout master
 fi

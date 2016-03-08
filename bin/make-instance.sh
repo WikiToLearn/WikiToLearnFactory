@@ -13,8 +13,8 @@ if [ ! -d ../WikiToLearn ] ; then
 fi
 
 . ../factory.config
-if [ "$W2L_FACTORY_RELASE" != "0.2" ] ; then
- echo "W2L Factory Relase Error"
+if [ "$WTL_FACTORY_RELASE" != "0.2" ] ; then
+ echo "WTL Factory Relase Error"
  exit
 fi
 
@@ -25,41 +25,41 @@ if [[ $? -ne 0 ]] ; then
  exit 1
 fi
 
-[[ -z "$W2L_INSTANCE_NAME" ]] && W2L_INSTANCE_NAME="w2l-dev"
+[[ -z "$WTL_INSTANCE_NAME" ]] && WTL_INSTANCE_NAME="wtl-dev"
 
-if [ ! -d "${W2L_RUNNING_DIR}" ] ; then
- echo "Missing ${W2L_RUNNING_DIR}"
+if [ ! -d "${WTL_RUNNING_DIR}" ] ; then
+ echo "Missing ${WTL_RUNNING_DIR}"
  exit 1
 fi
 
-if [ -d "${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}" ] ; then
- echo "Instance ${W2L_INSTANCE_NAME} exist"
+if [ -d "${WTL_RUNNING_DIR}/${WTL_INSTANCE_NAME}" ] ; then
+ echo "Instance ${WTL_INSTANCE_NAME} exist"
  exit 1
 fi
 
 echo "Create repository copy"
 
-rsync -a --stats ../WikiToLearn/ "${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}/"
-chown 1000:1000 "${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}/" -R
-cd "${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}/"
-if [[ ! -z "$W2L_COMMIT" ]] ; then
- git checkout "$W2L_COMMIT"
+rsync -a --stats ../WikiToLearn/ "${WTL_RUNNING_DIR}/${WTL_INSTANCE_NAME}/"
+chown 1000:1000 "${WTL_RUNNING_DIR}/${WTL_INSTANCE_NAME}/" -R
+cd "${WTL_RUNNING_DIR}/${WTL_INSTANCE_NAME}/"
+if [[ ! -z "$WTL_COMMIT" ]] ; then
+ git checkout "$WTL_COMMIT"
  git submodule sync
  git submodule update --init --recursive --checkout
 fi
 cd "Dockers/"
-export W2L_BACKUP_ENABLED=1
+export WTL_BACKUP_ENABLED=1
 ./run.sh
 ./fix-hosts.sh
-if [[ "$W2L_BACKUP_TO_RESTORE" == "" ]] ; then
- export W2L_INIT_DB=1
+if [[ "$WTL_BACKUP_TO_RESTORE" == "" ]] ; then
+ export WTL_INIT_DB=1
  ./init-docker.sh
 else
- export W2L_INIT_DB=0
- ./restore.sh "$W2L_BACKUP_TO_RESTORE"
+ export WTL_INIT_DB=0
+ ./restore.sh "$WTL_BACKUP_TO_RESTORE"
  ./init-docker.sh
 fi
 ./use-instance.sh
 
 cd "$curdir"
-echo ${W2L_INSTANCE_NAME} >> ../instances.log
+echo ${WTL_INSTANCE_NAME} >> ../instances.log

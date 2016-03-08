@@ -7,26 +7,26 @@ if [ ! -f ./factory.config ] ; then
 fi
 
 . ./factory.config
-if [ "$W2L_FACTORY_RELASE" != "0.2" ] ; then
- echo "W2L Factory Relase Error"
+if [ "$WTL_FACTORY_RELASE" != "0.2" ] ; then
+ echo "WTL Factory Relase Error"
  exit
 fi
 
 if [[ -f ./instances.log ]] ; then
- W2L_INSTANCE_NAME=$(cat ./instances.log | tail -1)
+ WTL_INSTANCE_NAME=$(cat ./instances.log | tail -1)
 fi
 
-[[ -z "$W2L_INSTANCE_NAME" ]] && W2L_INSTANCE_NAME="w2l-dev"
+[[ -z "$WTL_INSTANCE_NAME" ]] && WTL_INSTANCE_NAME="wtl-dev"
 
-if [ ! -d "${W2L_RUNNING_DIR}" ] ; then
- echo "Missing ${W2L_RUNNING_DIR}"
+if [ ! -d "${WTL_RUNNING_DIR}" ] ; then
+ echo "Missing ${WTL_RUNNING_DIR}"
  exit 1
 fi
 
-if [ ! -d "${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}" ] ; then
- echo "Instance ${W2L_INSTANCE_NAME} not exist"
+if [ ! -d "${WTL_RUNNING_DIR}/${WTL_INSTANCE_NAME}" ] ; then
+ echo "Instance ${WTL_INSTANCE_NAME} not exist"
  exit 1
 fi
 
-cd "${W2L_RUNNING_DIR}/${W2L_INSTANCE_NAME}/Dockers"
+cd "${WTL_RUNNING_DIR}/${WTL_INSTANCE_NAME}/Dockers"
 ./backup.sh
