@@ -1,4 +1,7 @@
 # WikiToLearnFactory
+
+THIS REPO IS OUTDATED, see WikiToLearnHome
+
 Scripts and stuff for create, destroy, backup, migrate instances of WikiToLearn
 
 This scripts act like an orchestrator of wikitolearn backup/update and migration ops
